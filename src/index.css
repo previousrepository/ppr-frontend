@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/* Dark theme scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #357ee6; /* gray-900 */
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #2677e9; /* gray-700 */
+  border-radius: 8px;
+  border: 2px solid #4474b8; /* space around thumb */
+}
+
+
+/* Define CSS variables here */
+@theme {
+  /* Shared background for light and dark modes */
+  
+  --shared-background: ;
+
+  /* Light Mode */
+  --color-primary: #1E40AF;
+  --color-primary-light: #3B82F6;
+  --color-accent: #F59E0B;
+  --color-surface: rgba(255, 255, 255, 0.5);
+  --color-border: rgba(17, 24, 39, 0.1);
+  --color-text: #111827;
+
+  /* Status colors */
+  --color-success: #10B981;
+  --color-error: #EF4444;
+
+  /* Dark Mode */
+  --shared-dark-background: ;
+
+  --color-dark-primary: #3B82F6;
+  --color-dark-primary-light: #60A5FA;
+  --color-dark-accent: #FBBF24;
+  --color-dark-surface: rgba(15,23,42,.5);
+  --color-dark-border: rgba(255, 255, 255, 0.1);
+  --color-dark-text: #F9FAFB;
+
+    /* Status colors */
+  --color-dark-success: #34D399;
+  --color-dark-error: #F87171;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 25px;
+  transition: all 0.3s;
+  background-color: rgba(106, 115, 125, 0.2);
+  &:hover {
+    background-color: rgba(106, 115, 125, 0.27);
+  }
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+}

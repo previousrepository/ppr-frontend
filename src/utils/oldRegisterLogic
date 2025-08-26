@@ -1,0 +1,329 @@
+// import { useEffect, useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// // import { authService } from "../services/authService";
+// import { createUserWithEmailAndPassword } from "firebase/auth";
+// import { setDoc, doc, serverTimestamp } from "firebase/firestore";
+// import { auth, db } from "../firebase/config";
+// import useFacultyAndDepartment from "./useFacultyAndDepartment";
+
+// export const useRegisterForm = (notifySuccess, notifyError) => {
+//   const navigate = useNavigate();
+//   const { faculties, departments, getDepartments } = useFacultyAndDepartment();
+
+//   const [formData, setFormData] = useState({
+//     // fubkId: "",
+//     // fubkPassword: "",
+//     fullName: "",
+//     email: "",
+//     faculty: "",
+//     department: "",
+//     idNumber: "",
+//     photoURL: "",
+//     password: "",
+//     confirmPassword: "",
+//     staffType: "",
+//     faculties: "",
+//     departments:"",
+//     selectedFaculty:"",
+//   });
+
+//   const [errors, setErrors] = useState({});
+//   // const [step, setStep] = useState(1);
+//   // const [verifyLoading, setVerifyLoading] = useState(false);
+//   const [submitLoading, setSubmitLoading] = useState(false);
+//   // const [scrapedData, setScrapedData] = useState(null);
+//   const [isStaff, setIsStaff] = useState(false);
+//   const [staffRole, setStaffRole] = useState("");
+//   const [collection, setCollection] = useState("");
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prevData) => ({ ...prevData, [name]: value }));
+
+//     if (name === "faculties") {
+//       setFormData((prev) => ({ ...prev, departments: "" }));
+//       setErrors((prev) => ({ ...prev, departments: "" }));
+//       getDepartments(value);
+//     }
+
+//     if (errors[name]) {
+//       setErrors((prev) => ({ ...prev, [name]: "" }));
+//     }
+//   };
+
+//   // const validateVerifyForm = () => {
+//   //   const newErrors = {};
+
+//   //   // Validate email
+//   //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//   //   if (!formData.fubkId) {
+//   //     newErrors.fubkId = "Email is required";
+//   //   } else if (!emailRegex.test(formData.fubkId)) {
+//   //     newErrors.fubkId = "Please enter a valid email";
+//   //   }
+
+//   //   // Validate password
+//   //   if (!formData.fubkPassword) {
+//   //     newErrors.fubkFassword = "Password is required";
+//   //   } else if (formData.fubkPassword.length < 6) {
+//   //     newErrors.fubkFassword = "Password must be at least 6 characters";
+//   //   }
+
+//   //   // Validate FUBK email pattern (only if email is valid)
+//   //   const email = formData.fubkId?.trim() || "";
+
+//   //   if (!emailRegex.test(email)) {
+//   //     newErrors.fubkId = "Please enter a valid email format";
+//   //   } else {
+//   //     const [emailUsername, emailDomain] = email.split("@");
+
+//   //     const isStudentEmail = /^\d{10}$/.test(emailUsername);
+//   //     const isLecturerEmail = /^[a-zA-Z]+\.[a-zA-Z]+$/.test(emailUsername);
+//   //     const isFubkDomain =
+//   //       emailDomain === "fubk.edu.ng" || emailDomain === "ug.fubk.edu.ng";
+
+//   //     if (!isFubkDomain) {
+//   //       newErrors.fubkId = "Only FUBK institutional emails are allowed";
+//   //     } else if (!isStudentEmail && !isLecturerEmail) {
+//   //       newErrors.fubkId = "Only FUBK institutional emails are allowed";
+//   //     }
+//   //   }
+
+//   //   return newErrors;
+//   // };
+
+//   const validateRegisterForm = () => {
+//     const newErrors = {};
+
+//     // Validate full name
+//     if (!formData.fullName.trim()) {
+//       newErrors.fullName = "Full name is required";
+//     }
+
+//     // Validate email
+//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     if (!formData.email.trim()) {
+//       newErrors.email = "Email is required";
+//     } else if (!emailRegex.test(formData.email)) {
+//       newErrors.email = "Please enter a valid email";
+//     }
+
+//     // Validate FUBK email pattern (only if email is valid)
+//     const email = formData.email?.trim() || "";
+
+//     if (!emailRegex.test(email)) {
+//       newErrors.email = "Please enter a valid email format";
+//     } else {
+//       const [emailUsername, emailDomain] = email.split("@");
+
+//       const isStudentEmail = /^\d{10}$/.test(emailUsername);
+//       const isLecturerEmail = /^[a-zA-Z]+\.[a-zA-Z]+$/.test(emailUsername);
+//       const isFubkDomain =
+//         emailDomain === "fubk.edu.ng" || emailDomain === "ug.fubk.edu.ng";
+
+//       if (!isFubkDomain) {
+//         newErrors.email = "Only FUBK institutional emails are allowed";
+//       } else if (!isStudentEmail && !isLecturerEmail) {
+//         newErrors.email =
+//           "Username must be 10-digit (student) or firstname.lastname (lecturer)";
+//       }
+//     }
+
+//     // Validate faculty
+//     if (!formData.faculty) {
+//       newErrors.faculty = "Faculty is required";
+//     }
+
+//     // Validate department
+//     if (!formData.department) {
+//       newErrors.department = "Department is required";
+//     }
+
+//     // Validate password
+//     if (!formData.password) {
+//       newErrors.password = "Password is required";
+//     } else if (formData.password.length < 6) {
+//       newErrors.password = "Password must be at least 6 characters";
+//     }
+
+//     // Confirm password
+//     if (!formData.confirmPassword) {
+//       newErrors.confirmPassword = "Please confirm your password";
+//     } else if (formData.password !== formData.confirmPassword) {
+//       newErrors.confirmPassword = "Passwords do not match";
+//     }
+
+//     // Validate staff type if applicable
+//     if (isStaff && !formData.staffType) {
+//       newErrors.staffType = "Please select staff type";
+//     }
+
+//     return newErrors;
+//   };
+
+//   // const handleVerify = async (e) => {
+//   //   e.preventDefault();
+//   //   const errs = validateVerifyForm();
+//   //   if (Object.keys(errs).length > 0) return setErrors(errs);
+//   //   setVerifyLoading(true);
+//   //   try {
+//   //     const { data } = await authService.verifyFubkCredentials(
+//   //       formData.fubkId,
+//   //       formData.fubkPassword
+//   //     );
+//   //     if (data?.success) {
+//   //       setScrapedData(data.payload);
+//   //       notifySuccess("Verified! Proceed to complete registration.");
+//   //     } else {
+//   //       notifyError("Verification failed. Continue manually.");
+//   //     }
+//   //     setStep(2);
+//   //   } catch (err) {
+//   //     notifyError(err?.response?.data?.message || "Verification failed.");
+//   //     setStep(2);
+//   //   } finally {
+//   //     setVerifyLoading(false);
+//   //   }
+//   // };
+
+//   const facultyOptions = faculties.map((faculty) => ({
+//     value: faculty.name,
+//     label: faculty.name,
+//   }));
+
+//   const departmentOptions = departments.map((dept) => ({
+//     value: dept,
+//     label: dept,
+//   }));
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     const errs = validateRegisterForm();
+//     if (Object.keys(errs).length > 0) return setErrors(errs);
+
+//     setSubmitLoading(true);
+//     try {
+//       const userCredential = await createUserWithEmailAndPassword(
+//         auth,
+//         formData.email,
+//         formData.password
+//       );
+
+//       const user = userCredential.user;
+      
+//       if (!user.uid) {
+//         throw new Error("Failed to register user.");
+//       }
+
+//       const userData = {
+//         uid: user.uid,
+//         fullName: formData?.fullName,
+//         email: formData?.email,
+//         faculty: formData?.faculty,
+//         department: formData?.department || null,
+//         role: formData?.role || staffRole,
+//         staffType: formData?.staffType || null,
+//         photoURL: formData?.photoURL || null,
+//         idNumber: formData?.idNumber || null,
+//         createAt: serverTimestamp(),
+//       };
+
+//       await setDoc(doc(db, collection, user.uid), userData);
+//       notifySuccess("Registration successful! You may now log in.");
+//       navigate("/login");
+//     } catch (err) {
+//       switch (err.code) {
+//         case "auth/email-already-in-use":
+//           notifyError(
+//             "This email is already in use. Please use a different email."
+//           );
+//           break;
+//         case "auth/invalid-email":
+//           notifyError("Invalid email format. Please provide a valid email.");
+//           break;
+//         case "auth/weak-password":
+//           notifyError("Password is too weak. Please use a stronger password.");
+//           break;
+//         case "auth/operation-not-allowed":
+//           notifyError(
+//             "Email/password sign-up is disabled. Contact the administrator."
+//           );
+//           break;
+//         default:
+//           notifyError(`An unexpected error occurred:, ${err.message}`);
+//           console.log(err.message, err.code);
+//       }
+//     } finally {
+//       setSubmitLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     const email = formData.email?.trim() || "";
+
+//     const [emailUsername, emailDomain] = email.split("@");
+
+//     const isStudentEmail = /^\d{10}$/.test(emailUsername);
+//     const isLecturerEmail = /^[a-zA-Z]+\.[a-zA-Z]+$/.test(emailUsername);
+//     const isFubkDomain =
+//       emailDomain === "fubk.edu.ng" || emailDomain === "ug.fubk.edu.ng";
+
+//     if (isStudentEmail && isFubkDomain) {
+//       setCollection("Student");
+//       setIsStaff(false);
+//     } else if (isLecturerEmail && isFubkDomain) {
+//       setCollection("Lecturer");
+//       setIsStaff(true);
+//     } else {
+//       setCollection("Guest");
+//       setIsStaff(false);
+//     }
+//   }, [formData.email]);
+
+//   useEffect(() => {
+//     if (formData.staffType === "academic") {
+//       setStaffRole("lecturer")
+//     } else (
+//       setStaffRole("staff")
+//     )
+//   }, [formData.staffType]);
+
+//   // useEffect(() => {
+//   //   if (scrapedData) {
+//   //     setFormData((prev) => ({
+//   //       ...prev,
+//   //       fullName: scrapedData.fullName,
+//   //       email: scrapedData.email,
+//   //       faculty: scrapedData.faculty,
+//   //       department: scrapedData.department,
+//   //       idNumber: scrapedData.idNumber,
+//   //       role: scrapedData.role,
+//   //       photoURL: scrapedData.photoURL,
+//   //       fubkId: scrapedData.fubkId,
+//   //       fubkPassword: "",
+//   //     }));
+//   //     const isLecturerEmail = /^[a-zA-Z]+\.[a-zA-Z]+$/.test(scrapedData.email);
+
+//   //     if (isLecturerEmail) setIsStaff(true);
+//   //   }
+//   // }, [scrapedData]);
+
+//   return {
+//     formData,
+//     handleChange,
+//     errors,
+//     // step,
+//     // setStep,
+//     // handleVerify,
+//     handleSubmit,
+//     // verifyLoading,
+//     submitLoading,
+//     isStaff,
+//     departments,
+//     facultyOptions,
+//     departmentOptions
+//   };
+// };
+
+
+// This old useRegister page contail FUBK web scrapping logic

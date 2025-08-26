@@ -1,0 +1,24 @@
+@layer utilities {
+  .bg-ppr-glow {
+    position: relative;
+    background-image: 
+      url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAwMCAxMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIHNsaWNlIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0icHByR3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMTQxODMwIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzEyMjc3MiIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTYxNzIyIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxwYXRoIGlkPSJzdGFyUGF0aCIgZD0iTSAwIDAgUSA1MCAtMTAgMTAwIDAiIGZpbGw9Im5vbmUiIC8+CiAgPC9kZWZzPgoKICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BwckdyYWRpZW50KSIgLz4KCiAgPGNpcmNsZSByPSIxLjIiIGN4PSIxMDAiIGN5PSIyMDAiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMTUiPgogICAgPGFuaW1hdGVNb3Rpb24gZHVyPSIxMnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiByb3RhdGU9ImF1dG8iPgogICAgICA8bXBhdGggaHJlZj0iI3N0YXJQYXRoIiAvPgogICAgPC9hbmltYXRlTW90aW9uPgogIDwvY2lyY2xlPgogIDxjaXJjbGUgcj0iMS42IiBjeD0iNDAwIiBjeT0iNjAwIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjEyIj4KICAgIDxhbmltYXRlTW90aW9uIGR1cj0iMTVzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgcm90YXRlPSJhdXRvIiBiZWdpbj0iMnMiPgogICAgICA8bXBhdGggaHJlZj0iI3N0YXJQYXRoIiAvPgogICAgPC9hbmltYXRlTW90aW9uPgogIDwvY2lyY2xlPgogIDxjaXJjbGUgcj0iMS40IiBjeD0iNzAwIiBjeT0iNDAwIiBmaWxsPSIjZmZmZmZmIiBvcGFjaXR5PSIwLjEwIj4KICAgIDxhbmltYXRlTW90aW9uIGR1cj0iMThzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgcm90YXRlPSJhdXRvIiBiZWdpbj0iNHMiPgogICAgICA8bXBhdGggaHJlZj0iI3N0YXJQYXRoIiAvPgogICAgPC9hbmltYXRlTW90aW9uPgogIDwvY2lyY2xlPgo8L3N2Zz4="),
+      linear-gradient(135deg, #1f2937, #1e40af, #111827);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-blend-mode: overlay;
+    animation: pprGradientShift 18s ease-in-out infinite;
+  }
+
+  @keyframes pprGradientShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+}
+
+
