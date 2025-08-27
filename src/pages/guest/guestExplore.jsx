@@ -11,7 +11,7 @@ import { auth } from "../../libs/firebase/config";
 
 const GuestExplore = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [status, setStatus] = useState("all");
+  // const [status, setStatus] = useState("all");
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();

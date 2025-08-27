@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import UseLecturerData from "../../../hooks/useLecturerData";
 import Header from "../../../components/ui/Header";
-import { projectService } from "../../../services/projectService";
 import Button from "../../../components/ui/Button";
 import clsx from "clsx";
 import FullPageLoader from "../../../components/ui/FullPageLoader";

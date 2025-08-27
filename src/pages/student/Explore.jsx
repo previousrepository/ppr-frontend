@@ -10,7 +10,7 @@ import ExploreCard from "../../components/public/ExploreCard";
 const Explore = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [status, setStatus] = useState("all");
-  const [sortValue, setSortValue] = useState("newest");
+  // const [sortValue, setSortValue] = useState("newest");
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { currentUser } = useAuth();
@@ -64,7 +64,7 @@ useEffect(() => {
             statusFilter={status}
             onStatusChange={setStatus}
             // showSort={true}
-            sortValue={sortValue}
+            // sortValue={sortValue}
             onSortChange={handleSort}
             statuses={["all", "public", "restricted"]}
           />
