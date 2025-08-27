@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../libs/firebase/config";
 import Input from "../../../components/ui/Input";
-import TextArea from "../../../components/ui/Textarea";
+import TextArea from "../../../components/ui/TextArea"
 import Button from "../../../components/ui/Button";
 import Header from "../../../components/ui/Header";
 import useToast from "../../../contexts/ToastContext";
