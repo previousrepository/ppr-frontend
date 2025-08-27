@@ -8,7 +8,7 @@ import RecentProjects from "./components/RecentProjects";
 import AccessRequestList from "./components/AccessRequestList";
 import QuickActions from "./components/QuickActions";
 import FullPageLoader from "../../components/ui/FullPageLoader";
-import StatCard from "./components/StatCard";
+import StatCard from "./components/StatCard.jsx";
 import {
   Folder,
   CheckCircle,
