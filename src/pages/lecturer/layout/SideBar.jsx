@@ -14,7 +14,7 @@ import { auth } from "../../../libs/firebase/config.js";
 // import { ThemeToggle } from "../../../components/ui/ThemeToggle.jsx";
 import Modal from "../../../components/ui/Modal.jsx";
 
-export function SideBar() {
+const SideBar = () => {
   // const { user } = useAuth();
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -121,3 +121,5 @@ export function SideBar() {
     </motion.div>
   );
 }
+
+export default SideBar;
