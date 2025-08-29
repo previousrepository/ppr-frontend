@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Sidebar from '../pages/Guest/layout/SideBar';
+import SideBar from '../pages/guest/layout/SideBar';
 import NavBar from '../pages/Guest/layout/NavBar';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
@@ -18,7 +18,7 @@ const GuestLayout = () => {
         <NavBar toggleSidebar={toggleSidebar} />
 
         <div className="flex">
-          <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
+          <SideBar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
 
           <motion.div
             initial={{ opacity: 0 }}

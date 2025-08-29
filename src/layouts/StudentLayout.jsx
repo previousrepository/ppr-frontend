@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import NavBar from "../pages/student/layouts/Navbar";
-import Sidebar from "../pages/student/layouts/SideBar";
+import SideBar from "../pages/student/layouts/SideBar";
 
 const StudentLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -16,7 +16,7 @@ const StudentLayout = () => {
       <NavBar toggleSidebar={toggleSidebar} />
 
       <div className="flex">
-        <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
+        <SideBar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
 
         <motion.div
           initial={{ opacity: 0 }}

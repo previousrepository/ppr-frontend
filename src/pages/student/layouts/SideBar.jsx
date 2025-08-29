@@ -7,7 +7,7 @@ import {
   BookOpen,
   FileText,
   Users,
-  Settings,
+  // Settings,
   LogOut,
 } from "lucide-react";
 import clsx from "clsx";
@@ -16,7 +16,7 @@ import { auth } from "../../../libs/firebase/config.js";
 // import { ThemeToggle } from "../../../components/ui/ThemeToggle.jsx";
 import Modal from "../../../components/ui/Modal.jsx";
 
-export function Sidebar() {
+export function SideBar() {
   // const { user } = useAuth();
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
