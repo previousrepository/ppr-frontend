@@ -192,8 +192,7 @@ const Register = () => {
                 />
               </motion.div>
 
-              {departments.length > 0 &&
-                (!isStaff || formData.staffType === "academic") && (
+              {departments.length > 0 && (
                   <motion.div variants={itemVariants}>
                     <Select
                       label="Department"

@@ -167,10 +167,7 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
         displayName: formData?.firstName?.trim(),
         email: formData?.email?.trim(),
         faculty: formData?.faculties?.trim(),
-        department:
-          isStaff && formData?.staffType === "non-academic"
-            ? ""
-            : (formData?.departments || "").trim(),
+        department:formData?.departments.trim(),
         createdAt: serverTimestamp(),
       };
 

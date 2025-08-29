@@ -1,6 +1,11 @@
 {
   "plugins": ["import"],
   "rules": {
-    "import/no-unresolved": "error"
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/no-cycle": "off",
+
+    "import/no-unresolved": ["error", { "caseSensitive": true }]
   }
 }
