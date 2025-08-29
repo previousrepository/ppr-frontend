@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { lecturerService } from "../../../services/lecturerService";
 import useToast from "../../../contexts/ToastContext";
-import TextArea from "../../../components/ui/Textarea";
+import TextArea from "../../../components/ui/TextArea";
 import Button from "../../../components/ui/Button";
 import logLecturerAction from "../../../utils/logLecturerAction";
 
