@@ -6,7 +6,6 @@ import {
   BookOpen,
   FileText,
   Users,
-  Settings,
   LogOut,
 } from "lucide-react";
 import clsx from "clsx";

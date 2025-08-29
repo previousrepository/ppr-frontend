@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { Sidebar } from '../pages/lecturer/layout/SideBar';
+import Sidebar from '../pages/lecturer/layout/SideBar';
 import NavBar from '../pages/lecturer/layout/NavBar';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
