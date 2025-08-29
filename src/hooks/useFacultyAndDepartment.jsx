@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 
-// Simulate async fetch
 const facultiesData = () => {
   return new Promise((resolve) => {
     setTimeout(() => {

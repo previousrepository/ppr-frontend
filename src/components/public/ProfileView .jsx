@@ -1,14 +1,14 @@
 import {
   User,
   Mail,
-  BookOpen,
+  // BookOpen,
   GraduationCap,
   Briefcase,
-  Award,
+  // Award,
   Layers,
-  FileText,
+  // FileText,
 } from "lucide-react";
-import Header from "../ui/Header";
+// import Header from "../ui/Header";
 import AvatarSVG from "../ui/AvatarSVG";
 
 const ProfileView = ({ profile, role }) => {

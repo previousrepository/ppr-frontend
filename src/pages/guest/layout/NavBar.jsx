@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 import {
-  Home,
-  FileText,
+  // Home,
+  // FileText,
   Search,
-  User,
+  // User,
 } from "lucide-react";
 import clsx from "clsx";
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { db } from "../config/firebase"; // adjust if needed
-import { useAuth } from "./useAuth"; // assuming department/user context is needed
+import { db } from "../config/firebase"; 
+import { useAuth } from "./useAuth"; 
 
 export const useDashboardStats = () => {
   const { user } = useAuth();
