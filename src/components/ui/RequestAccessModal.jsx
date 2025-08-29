@@ -3,7 +3,7 @@ import { projectService } from "../../services/projectService";
 import { useAuth } from "../../hooks/useAuth";
 import UseStudentData from "../../hooks/useStudentData";
 import useToast from "../../contexts/ToastContext";
-import Textarea from "../ui/Textarea";
+import TextArea from "../ui/TextArea";
 import Button from "../ui/Button";
 import { logStudentAction } from "../../utils/logStudentAction";
 import { useNavigate } from "react-router-dom";
@@ -85,7 +85,7 @@ const handleRequest = async () => {
           Please explain why you need access to this project.
         </p>
 
-        <Textarea
+        <TextArea
           value={requestReason}
           onChange={(e) => setReason(e.target.value)}
           placeholder="Write your reason..."
