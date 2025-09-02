@@ -3,7 +3,6 @@ import { useAuth } from "../hooks/useAuth";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { currentUser, role, loading } = useAuth();
-  console.log("ProtectedRoute currentUser:", role);
 
   if (loading) return;
   

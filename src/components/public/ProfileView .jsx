@@ -23,20 +23,20 @@ const ProfileView = ({ profile, role }) => {
 
   return (
     <>
-      <main className="flex justify-center px-4 mt-8">
-        <div className="w-full max-w-3xl space-y-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 md:p-8 bg-[var(--color-surface)] dark:bg-[var(--color-dark-surface)] transition-all capitalize">
-          <div className="flex items-center gap-4 bg-white/60 dark:bg-gray-700/20 backdrop-blur-sm px-3 py-4 rounded-xl shadow-sm">
+      <main className="flex justify-center px-4 mt-8 ">
+        <div className="w-full md:max-w-3xl space-y-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 md:p-8 bg-[var(--color-surface)] dark:bg-[var(--color-dark-surface)] transition-all capitalize">
+          <div className="flex items-center gap-2 bg-white/60 dark:bg-gray-700/20 backdrop-blur-sm px-2 py-4 rounded-xl shadow-sm">
             {/* <img
               src={profile.profilePic || "/default-avatar.png"}
               alt="Profile"
               className="w-24 h-24 rounded-full object-cover border-4 border-white dark:border-gray-700 shadow"
             /> */}
-            <AvatarSVG name={profile?.displayName || "User"} size={80} />
+            <AvatarSVG name={profile?.displayName || "User"} size={75} />
             <div>
-              <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+              <h2 className="text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-100">
                 {profile.fullName}
               </h2>
-              <p className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
+              <p className="flex items-center gap-2 text-gray-600 dark:text-gray-300 text-xs md:text-md">
                 <Mail className="w-4 h-4 text-blue-500" />
                 {profile.email}
               </p>

@@ -15,6 +15,7 @@ const HeaderActions = ({
   onSortChange,
   statuses = ["all", "approved", "pending", "rejected"],
   onLogout,
+  showMenuButton = false,
 }) => {
   const [showStatus, setShowStatus] = useState(false);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
@@ -42,7 +43,7 @@ const HeaderActions = ({
 
   return (
     <div className="flex gap-2 md:flex-row md:items-center md:flex-wrap w-full md:w-auto relative">
-      
+      {/* 🔍 Search */}
       {showSearch && (
         <div className="w-full sm:w-auto">
           <SearchInput
@@ -53,7 +54,7 @@ const HeaderActions = ({
         </div>
       )}
 
-      
+      {/* 🔽 Filter */}
       {showFilter && (
         <div ref={statusRef} className="relative">
           <button
@@ -79,7 +80,7 @@ const HeaderActions = ({
         </div>
       )}
 
-      
+      {/* ↕️ Sort */}
       {showSort && (
         <div ref={sortRef} className="relative">
           <button
@@ -121,27 +122,29 @@ const HeaderActions = ({
         </div>
       )}
 
-      
-      <div ref={menuRef} className="relative md:hidden">
-        <button
-          onClick={() => setShowMenu((prev) => !prev)}
-          className="flex items-center gap-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
-        >
-          <Menu className="w-5 h-5" />
-        </button>
+      {/* 🍔 Mobile Menu */}
+      {showMenuButton && (
+        <div ref={menuRef} className="relative md:hidden">
+          <button
+            onClick={() => setShowMenu((prev) => !prev)}
+            className="flex items-center gap-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
 
-        {showMenu && (
-          <div className="absolute right-0 mt-7 w-36 bg-white/50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-20">
-            <button
-              onClick={onLogout}
-              className="flex items-center gap-2 w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all"
-            >
-              <LogOut className="w-4 h-4" />
-              Logout
-            </button>
-          </div>
-        )}
-      </div>
+          {showMenu && (
+            <div className="absolute right-0 mt-7 w-36 bg-white/50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-20">
+              <button
+                onClick={onLogout}
+                className="flex items-center gap-2 w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all"
+              >
+                <LogOut className="w-4 h-4" />
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

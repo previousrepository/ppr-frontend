@@ -54,6 +54,7 @@ const GuestExplore = () => {
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             showFilter={false}
+            showMenuButton={true}
             onLogout={() => {
               auth.signOut();
               navigate("/login");

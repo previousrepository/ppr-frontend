@@ -4,7 +4,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../libs/firebase/config";
 import useFacultyAndDepartment from "./useFacultyAndDepartment";
-// import { authService } from "../services/authService";
 
 export const useRegisterForm = (notifySuccess, notifyError) => {
   const navigate = useNavigate();
@@ -22,7 +21,6 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
     faculties: "",
     departments: "",
     studentId: "",
-    photoURL: "",
     password: "",
     confirmPassword: "",
     staffType: "",
@@ -89,12 +87,7 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
     if (currentStep === 2) {
       if (!formData?.faculties) newErrors.faculties = "Faculty is required";
 
-      if (
-        !formData?.departments &&
-        (!isStaff || (isStaff && formData?.staffType === "academic"))
-      ) {
-        newErrors.departments = "Department is required";
-      }
+      if (!formData?.departments) newErrors.departments = "Department is required";
 
       if (!formData?.password) {
         newErrors.password = "Password is required";
@@ -166,8 +159,8 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
           `${formData?.firstName?.trim()} ${formData?.lastName?.trim()}`.trim(),
         displayName: formData?.firstName?.trim(),
         email: formData?.email?.trim(),
-        faculty: formData?.faculties?.trim(),
-        department:formData?.departments.trim(),
+        faculty: formData?.faculties?.trim() || "",
+        department:formData?.departments.trim() || "",
         createdAt: serverTimestamp(),
       };
 
@@ -186,17 +179,12 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
           };
 
       await setDoc(
-        doc(db, isStudent === "Student" ? "Student" : "Lecturer", user.uid),
+        doc(db, isStudent ? "Student" : "Lecturer", user.uid),
         userData
       );
 
       notifySuccess("Registration successful!");
-
-      if (isStudent) {
-        navigate("/login", { replace: true });
-      } else {
-        navigate("/login", { replace: true });
-      }
+      navigate("/login", { replace: true });
     } catch (err) {
       if (err?.code) {
         switch (err.code) {
@@ -226,7 +214,7 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
   };
 
   useEffect(() => {
-    const email = formData?.email?.trim() || "";
+    const email = formData?.email || "";
     if (email.includes("@")) {
       const [emailUsername, emailDomain] = email.split("@");
       const isStudent = /^\d{10}$/.test(emailUsername);

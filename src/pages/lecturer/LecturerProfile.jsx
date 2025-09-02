@@ -20,6 +20,7 @@ const LecturerProfile = () => {
           <HeaderActions
             showSearch={false}
             showFilter={false}
+            showMenuButton={true}
             onLogout={() => {
               auth.signOut();
               navigate("/login");
