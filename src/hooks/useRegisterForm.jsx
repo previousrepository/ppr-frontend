@@ -7,12 +7,8 @@ import useFacultyAndDepartment from "./useFacultyAndDepartment";
 
 export const useRegisterForm = (notifySuccess, notifyError) => {
   const navigate = useNavigate();
-  const {
-    faculties,
-    departments,
-    getDepartments,
-    error: facultyError,
-  } = useFacultyAndDepartment();
+  const { faculties, departments, getDepartments, error: facultyError } =
+    useFacultyAndDepartment();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -20,7 +16,6 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
     email: "",
     faculties: "",
     departments: "",
-    studentId: "",
     password: "",
     confirmPassword: "",
     staffType: "",
@@ -28,7 +23,6 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
 
   const [errors, setErrors] = useState({});
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [isValidating, setIsValidating] = useState(false);
   const [isStaff, setIsStaff] = useState(false);
   const [staffRole, setStaffRole] = useState("");
   const [collection, setCollection] = useState("");
@@ -41,11 +35,7 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
 
     if (name === "faculty") {
       getDepartments(value);
-      setFormData((prev) => ({
-        ...prev,
-        faculties: value,
-        departments: "",
-      }));
+      setFormData((prev) => ({ ...prev, faculties: value, departments: "" }));
       setErrors((prev) => ({ ...prev, departments: "" }));
     }
 
@@ -58,15 +48,15 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
     const newErrors = {};
 
     if (currentStep === 1) {
-      if (!formData?.firstName.trim())
+      if (!formData.firstName.trim())
         newErrors.firstName = "First name is required";
-      if (!formData?.lastName.trim())
+      if (!formData.lastName.trim())
         newErrors.lastName = "Last name is required";
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!formData?.email.trim()) {
+      if (!formData.email.trim()) {
         newErrors.email = "Email is required";
-      } else if (!emailRegex.test(formData?.email)) {
+      } else if (!emailRegex.test(formData.email)) {
         newErrors.email = "Please enter a valid email";
       } else {
         const [emailUsername, emailDomain] = formData.email.split("@");
@@ -85,23 +75,23 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
     }
 
     if (currentStep === 2) {
-      if (!formData?.faculties) newErrors.faculties = "Faculty is required";
+      if (!formData.faculties) newErrors.faculties = "Faculty is required";
+      if (!formData.departments)
+        newErrors.departments = "Department is required";
 
-      if (!formData?.departments) newErrors.departments = "Department is required";
-
-      if (!formData?.password) {
+      if (!formData.password) {
         newErrors.password = "Password is required";
-      } else if (formData?.password.length < 6) {
+      } else if (formData.password.length < 6) {
         newErrors.password = "Password must be at least 6 characters";
       }
 
-      if (!formData?.confirmPassword) {
+      if (!formData.confirmPassword) {
         newErrors.confirmPassword = "Please confirm your password";
-      } else if (formData?.password !== formData?.confirmPassword) {
+      } else if (formData.password !== formData.confirmPassword) {
         newErrors.confirmPassword = "Passwords do not match";
       }
 
-      if (isStaff && !formData?.staffType) {
+      if (isStaff && !formData.staffType) {
         newErrors.staffType = "Please select staff type";
       }
     }
@@ -114,40 +104,27 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
     return newErrors;
   };
 
-  const facultyOptions = faculties.map((faculty) => ({
-    value: faculty.name,
-    label: faculty.name,
-  }));
-
-  const departmentOptions = departments.map((dept) => ({
-    value: dept,
-    label: dept,
-  }));
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errs = validateStep(2);
-    if (Object.keys(errs).length > 0) {
-      return;
-    }
+    if (Object.keys(errs).length > 0) return;
 
     if (!collection) {
       setErrors((prev) => ({
         ...prev,
-        form: "Unable to determine user type from email. Please use your FUBK email.",
+        form: "Unable to determine user type. Please use your FUBK email.",
       }));
       return;
     }
 
-    setIsValidating(true);
     setSubmitLoading(true);
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
-        formData?.email,
-        formData?.password
+        formData.email,
+        formData.password
       );
       const user = userCredential.user;
       if (!user?.uid) throw new Error("Failed to register user.");
@@ -155,33 +132,29 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
       const isStudent = collection === "Student";
 
       const baseCommon = {
-        fullName:
-          `${formData?.firstName?.trim()} ${formData?.lastName?.trim()}`.trim(),
-        displayName: formData?.firstName?.trim(),
-        email: formData?.email?.trim(),
-        faculty: formData?.faculties?.trim() || "",
-        department:formData?.departments.trim() || "",
+        fullName: `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim(),
+        displayName: formData.firstName.trim(),
+        email: formData.email.trim(),
+        faculty: formData.faculties.trim(),
+        department: formData.departments.trim(),
         createdAt: serverTimestamp(),
       };
 
       const userData = isStudent
         ? {
             ...baseCommon,
-            studentId: user.uid,
+            uid: user.uid,
             role: "student",
-            admissionNumber: admissionNumber,
+            admissionNumber,
           }
         : {
             ...baseCommon,
-            lecturerId: user.uid,
+            uid: user.uid,
             role: "lecturer",
             staffType: staffRole,
           };
 
-      await setDoc(
-        doc(db, isStudent ? "Student" : "Lecturer", user.uid),
-        userData
-      );
+      await setDoc(doc(db, collection, user.uid), userData);
 
       notifySuccess("Registration successful!");
       navigate("/login", { replace: true });
@@ -206,15 +179,14 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
       } else {
         notifyError(`Unexpected error: ${err?.message || "Unknown error"}`);
       }
-      console.error(err);
+      console.error("Registration Error:", err);
     } finally {
-      setIsValidating(false);
       setSubmitLoading(false);
     }
   };
 
   useEffect(() => {
-    const email = formData?.email || "";
+    const email = formData.email || "";
     if (email.includes("@")) {
       const [emailUsername, emailDomain] = email.split("@");
       const isStudent = /^\d{10}$/.test(emailUsername);
@@ -240,24 +212,34 @@ export const useRegisterForm = (notifySuccess, notifyError) => {
       setIsStaff(false);
       setAdmissionNumber("");
     }
-  }, [formData?.email]);
+  }, [formData.email]);
 
   useEffect(() => {
-    if (formData?.staffType === "academic") {
+    if (formData.staffType === "academic") {
       setStaffRole("academic");
-    } else if (formData?.staffType === "non-academic") {
+    } else if (formData.staffType === "non-academic") {
       setStaffRole("non-academic");
     } else {
       setStaffRole("");
     }
-  }, [formData?.staffType]);
+  }, [formData.staffType]);
+
+
+  const facultyOptions = faculties.map((faculty) => ({
+    value: faculty.name,
+    label: faculty.name,
+  }));
+
+  const departmentOptions = departments.map((dept) => ({
+    value: dept,
+    label: dept,
+  }));
 
   return {
     formData,
     handleChange,
     errors,
     handleSubmit,
-    isValidating,
     submitLoading,
     isStaff,
     departments,
