@@ -27,14 +27,22 @@ const AuthProvider = ({ children }) => {
         const lecturerSnap = await getDoc(lecturerRef);
 
         let userRole;
-        if (studentSnap.exists()) userRole = "student";
-        if (lecturerSnap.exists()) userRole = "lecturer";
+
+        if (studentSnap.exists()) {
+          userRole = "student";
+        } else if (lecturerSnap.exists()) {
+          const lecturerData = lecturerSnap.data();
+          if (lecturerData.staffType === 'non-academic') {
+            userRole = "staff";
+          } else {
+            userRole = "lecturer";
+          }
+        }
 
         setCurrentUser(user);
         setRole(userRole);
       } catch (err) {
         console.error("Error fetching user role:", err);
-        // setRole("guest");
       }
 
       setLoading(false);

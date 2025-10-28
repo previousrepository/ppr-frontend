@@ -22,6 +22,7 @@ const Submissions = () => {
       try {
         const data = await lecturerService.getDepartmentSubmissions(userData?.department);
         setProjects(data);
+        console.log(data);
       } catch (error) {
         console.error("Failed to fetch submissions:", error);
       } finally {
